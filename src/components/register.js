@@ -32,6 +32,7 @@ function Register(props) {
   }
 
 
+
   const clickRegister = async () => {
     console.log("Button clicked");
     // axios.defaults.baseURL = 'http://88.200.63.148:9002';
