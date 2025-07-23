@@ -1,6 +1,6 @@
 import {Component} from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router';
-import App from './App';
+// import App from './App';
 //import LessonDetails from './components/Lesson/LessonDetails';
 //import CreateNews from './components/News/crreate-news';
 //import SuccessPage from './components/shared/success/SuccessPage';
@@ -18,11 +18,10 @@ export class AppRoutes extends Component {
         <Routes>
           <Route path="/" element={<Layout />}>
             <Route index element={<Feed />} />
-            <Route path='success/:id' element={<Feed />} />
+            <Route path='success/:id' element={<FeedWrapper />} />
             <Route path='login' element={<Login />} />
             <Route path='register' element={<Register />} />
             <Route path='/createPost' element={<CreatePost />} />
-            {/* <Route path="/profile" element={<Profile />} /> */}
           </Route>
         </Routes>
       </BrowserRouter>

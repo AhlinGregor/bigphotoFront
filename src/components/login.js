@@ -13,6 +13,7 @@ function Login(props) {
     password: '',
   }
   const [state, setState] = useState(initialState);
+  const [currentUser, setCurrentUser] = useState(null);
   const navigate = useNavigate();
 
 
@@ -37,7 +38,12 @@ function Login(props) {
       console.log(res.data);
       if (res.data.success) {
         console.log('record id: ', res);
-        navigate(`/success/${res.data.id}`);
+        // const user = res.data.user;
+        // setCurrentUser(user);
+        localStorage.setItem("currentUser", JSON.stringify(res.data.user));
+        console.log(res.data.user.id);
+        navigate(`/success/${res.data.user.id}`);
+        window.location.reload();
       }
       else {
         console.log("Incorrect password!");

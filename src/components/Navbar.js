@@ -1,8 +1,14 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 
-const Navbar = () => {
+const Navbar = ({ currentUser }) => {
   const navigate = useNavigate();
+
+  const handleLogout = () => {
+    localStorage.removeItem("currentUser");
+    navigate('/login');
+    window.location.reload(); // optional: ensures re-rendering everything
+  };
 
   return (
     <div style={{
@@ -13,37 +19,57 @@ const Navbar = () => {
       justifyContent: 'space-between',
       alignItems: 'center',
       padding: '12px 24px',
-      backgroundColor: 'rgba(63, 71, 84, 0.50)', // translucent
-      backdropFilter: 'blur(8px)', // blur background behind navbar
-      WebkitBackdropFilter: 'blur(8px)', // Safari support
-      borderBottom: '1px solid rgba(0, 0, 0, 0.1)', // subtle border
+      backgroundColor: 'rgba(63, 71, 84, 0.50)',
+      backdropFilter: 'blur(8px)',
+      WebkitBackdropFilter: 'blur(8px)',
+      borderBottom: '1px solid rgba(0, 0, 0, 0.1)',
       boxShadow: '0 10px 20px -10px rgba(0, 0, 0, 0.1)'
-      // boxShadow: '0 4px 12px rgba(0, 0, 0, 0.05)',
-      // display: 'flex',
-      // justifyContent: 'space-between',
-      // alignItems: 'center',
-      // padding: '12px 24px',
-      // backgroundColor: 'rgba(63, 71, 84, 1)',
-      // position: 'sticky',
-      // top: 0,
-      // zIndex: 1000
     }}>
-      <div style={{ fontWeight: 'bold', fontSize: '20px', cursor: 'pointer' }} onClick={() => navigate('/')}>
+      <div
+        style={{ fontWeight: 'bold', fontSize: '20px', cursor: 'pointer' }}
+        onClick={() => navigate('/')}
+      >
         BigPhoto
       </div>
+
       <div>
-        <button
-          style={buttonStyle}
-          onClick={() => navigate('/createPost')}
-        >
-          + New Post
-        </button>
-        <button
-          style={{ ...buttonStyle, marginLeft: '12px' }}
-          onClick={() => navigate('/profile')}
-        >
-          Profile
-        </button>
+        {currentUser ? (
+          <>
+            <button
+              style={buttonStyle}
+              onClick={() => navigate('/createPost')}
+            >
+              + New Post
+            </button>
+            <button
+              style={{ ...buttonStyle, marginLeft: '12px' }}
+              onClick={() => navigate('/profile')}
+            >
+              Profile
+            </button>
+            <button
+              style={{ ...buttonStyle, marginLeft: '12px', backgroundColor: '#ffdddd' }}
+              onClick={handleLogout}
+            >
+              Log Out
+            </button>
+          </>
+        ) : (
+          <>
+            <button
+              style={buttonStyle}
+              onClick={() => navigate('/login')}
+            >
+              Log In
+            </button>
+            <button
+              style={{ ...buttonStyle, marginLeft: '12px' }}
+              onClick={() => navigate('/register')}
+            >
+              Register
+            </button>
+          </>
+        )}
       </div>
     </div>
   );

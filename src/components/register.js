@@ -55,7 +55,16 @@ function Register(props) {
       // })
       // .catch(err => console.err('err: ', err));
       console.log('record id: ', res.data);
-      navigate(`/success/${res.data.id}`);
+
+      const loginRes = await api.post('/users/login', {
+        username: state.username,
+        password: state.password,
+      });
+
+      const user = loginRes.data.user;
+      localStorage.setItem("currentUser", JSON.stringify(user));
+      navigate(`/success/${user.id}`);
+      window.location.reload();
       
     }
     catch(error) {

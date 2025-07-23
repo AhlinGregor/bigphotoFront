@@ -1,11 +1,12 @@
 import React from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useOutletContext } from 'react-router-dom';
 import Feed from './feed';
-import Navbar from './Navbar';
+// import Navbar from './Navbar';
 
 const FeedWrapper = () => {
   const navigate = useNavigate();
-  return <Feed navigate={navigate} />;
+  const { currentUser } = useOutletContext();
+  return <Feed navigate={navigate} currentUser={currentUser} />;
 };
 
 export default FeedWrapper;

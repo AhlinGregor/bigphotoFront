@@ -1,9 +1,9 @@
-import {useState} from 'react';
+// import {useState} from 'react';
 import axios from 'axios';
 import React from 'react';
 import OnePost from './onePost'
-import api from '../services/api';
-import {useNavigate} from 'react-router';
+// import api from '../services/api';
+// import {useNavigate} from 'react-router';
 
 class Feed extends React.Component {
   constructor(props){
@@ -22,12 +22,12 @@ class Feed extends React.Component {
   // }
 
     render() {
+      const { currentUser, navigate } = this.props;
       return (
         <>
-          
           <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', width: '100%' }}>
             {
-              this.state.post.map(post => <OnePost key={post.id} description={post.description} username={post.username} imageUrl={`http://88.200.63.148:9002/uploads/${post.photo}`} />)
+              this.state.post.map(post => <OnePost key={post.id} postId={post.id} description={post.description} username={post.username} imageUrl={`http://88.200.63.148:9002/uploads/${post.photo}`} profileImageUrl={`http://88.200.63.148:9002/pfps/${post.pfp}`} currentUser={this.props.currentUser} />)
             }
           </div>
         </>

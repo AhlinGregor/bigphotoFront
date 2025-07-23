@@ -33,23 +33,30 @@ function CreatePost(props) {
 
   const clickPost = async () => {
     console.log("Button clicked");
+    // const userId = JSON.parse(localStorage.getItem("currentUser"));
+    // console.log('this is the user id: ', userId);
     // axios.defaults.baseURL = 'http://88.200.63.148:9002';
     try {
       const formData = new FormData();
       formData.append('description', state.description);
       formData.append('file', selectedImageFile);
+      // formData.append('user', userId);
 
       const config = {
         headers: {
           'Content-Type': 'multipart/form-data',
         },
+        withCredentials: true,
+        timeout: 30000,
       }
 
-      const res = await api.post('/objave/post', formData, config);
+      console.log('Before post');
+      const res = await api.post('/objave', formData, config);
       // .then(res => {
       //   console.log('response: ', res)
       // })
       // .catch(err => console.err('err: ', err));
+      console.log('After post');
       console.log('record id: ', res.data);
       navigate(`/success/${res.data.id}`);
       

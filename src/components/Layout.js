@@ -1,16 +1,23 @@
-import React from 'react';
-import Navbar from './Navbar';
 import { Outlet } from 'react-router-dom';
+import { useEffect, useState } from 'react';
+import Navbar from './Navbar'; // assuming you have one
 
-const Layout = () => {
+function Layout() {
+  const [currentUser, setCurrentUser] = useState(null);
+
+  useEffect(() => {
+    const storedUser = localStorage.getItem("currentUser");
+    if (storedUser) {
+      setCurrentUser(JSON.parse(storedUser));
+    }
+  }, []);
+
   return (
     <>
-      <Navbar />
-      <main style={{ paddingTop: '60px' }}>
-        <Outlet />
-      </main>
+      <Navbar currentUser={currentUser} />
+      <Outlet context={{ currentUser }} />
     </>
   );
-};
+}
 
 export default Layout;
