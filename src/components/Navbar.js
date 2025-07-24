@@ -36,19 +36,21 @@ const Navbar = ({ currentUser }) => {
         {currentUser ? (
           <>
             <button
-              style={buttonStyle}
+              className='buttons'
               onClick={() => navigate('/createPost')}
             >
               + New Post
             </button>
             <button
-              style={{ ...buttonStyle, marginLeft: '12px' }}
+              className='buttons'
+              style={{ marginLeft: '12px' }}
               onClick={() => navigate('/profile')}
             >
               Profile
             </button>
             <button
-              style={{ ...buttonStyle, marginLeft: '12px', backgroundColor: '#ffdddd' }}
+              className='buttons'
+              style={{ marginLeft: '12px', backgroundColor: '#ffdddd' }}
               onClick={handleLogout}
             >
               Log Out
@@ -57,13 +59,14 @@ const Navbar = ({ currentUser }) => {
         ) : (
           <>
             <button
-              style={buttonStyle}
+              className='buttons'
               onClick={() => navigate('/login')}
             >
               Log In
             </button>
             <button
-              style={{ ...buttonStyle, marginLeft: '12px' }}
+              className='buttons'
+              style={{ marginLeft: '12px' }}
               onClick={() => navigate('/register')}
             >
               Register

@@ -1,8 +1,4 @@
-// import logo from './logo.svg';
 import './App.css';
-import {useState} from 'react';
-// import axios from 'axios';
-// import api from '../../services/api';
 import {useNavigate} from 'react-router';
 
 function App() {

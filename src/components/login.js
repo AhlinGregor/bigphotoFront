@@ -2,6 +2,7 @@ import {useState} from 'react';
 import axios from 'axios';
 import api from '../services/api';
 import {useNavigate} from 'react-router';
+import { Link } from 'react-router-dom';
 
 function Login(props) {
   // const [title, setTitle] = useState('Initial title');
@@ -25,7 +26,7 @@ function Login(props) {
 
 
   const clickLogin = async () => {
-    axios.defaults.baseURL = 'http://88.200.63.148:9002';
+    axios.defaults.baseURL = `${process.env.REACT_APP_BACKEND}`;
     try {
       const res = await api.post('/users/login', {
         ...state
@@ -64,16 +65,21 @@ function Login(props) {
         <br/>
         <input onChange={({target: {value: inputUsername}}) => {
           setState(prevState => ({...prevState, username: inputUsername}))
-        }} type='text' placeholder='Username' value={state.username} />
+        }} type='text' className='inputField' placeholder='Username' value={state.username} />
         <br/>
 
         <input onChange={({target: {value: inputPassword}}) => {
           setState(prevState => ({...prevState, password: inputPassword}))
-        }} type='password' placeholder='Password' />
+        }} type='password' className='inputField' placeholder='Password' />
         <br/>
 
 
-        <button onClick={() => clickLogin()}>Login</button>
+        <button className='buttons' onClick={() => clickLogin()}>Login</button>
+        <br/>
+        <p style={{ marginTop: '10px' }}>
+          Don't have an account yet? You can register <Link to="/register">here</Link>!
+        </p>
+
       </div>
     </div>
   )

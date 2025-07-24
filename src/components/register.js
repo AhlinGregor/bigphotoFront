@@ -2,6 +2,7 @@ import {useState} from 'react';
 // import axios from 'axios';
 import api from '../services/api';
 import {useNavigate} from 'react-router';
+import { Link } from 'react-router-dom';
 
 function Register(props) {
   // const [title, setTitle] = useState('Initial title');
@@ -81,12 +82,12 @@ function Register(props) {
         <br/>
         <input onChange={({target: {value: username}}) => {
           setState(prevState => ({...prevState, username: username}))
-        }} type='text' placeholder='Username' value={state.username} />
+        }} type='text' className='inputField' placeholder='Username' value={state.username} />
         <br></br>
 
         <input onChange={({target: {value: password}}) => {
           setState(prevState => ({...prevState, password: password}))
-        }} type='password' placeholder='Password' value={state.password} />
+        }} type='password' className='inputField' placeholder='Password' value={state.password} />
         <br></br>
 
         {/* <input onChange={({target: {value: bio}}) => {
@@ -94,7 +95,13 @@ function Register(props) {
         }} type='text' placeholder='Bio' value={state.bio} /> */}
         <textarea onChange={({target: {value: bio}}) => {
           setState(prevState => ({...prevState, bio: bio}))
-        }} placeholder='Bio' value={state.bio} />
+        }} placeholder='Bio' value={state.bio} style={{
+          padding: '8px 16px',
+          fontSize: '14px',
+          border: '1px solid #ccc',
+          borderRadius: '6px',
+          outline: 'none',
+        }} />
         <br></br>
 
         <input type="file" accept="image/*" onChange={handleFileChange} />
@@ -107,7 +114,11 @@ function Register(props) {
         )}
         <br></br>
 
-        <button onClick={() => clickRegister()}>Register</button>
+        <button className='buttons' onClick={() => clickRegister()}>Register</button>
+        <br/>
+        <p style={{ marginTop: '10px' }}>
+          Already have an account? You can login <Link to="/login">here</Link>!
+        </p>
       </div>
     </div>
   );
