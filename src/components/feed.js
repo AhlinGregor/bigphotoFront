@@ -22,7 +22,7 @@ class Feed extends React.Component {
   // }
 
     render() {
-      const { currentUser, navigate } = this.props;
+      //const { currentUser, navigate } = this.props;
       return (
         <>
           <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', width: '100%' }}>

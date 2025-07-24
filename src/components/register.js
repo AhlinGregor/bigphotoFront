@@ -86,7 +86,7 @@ function Register(props) {
 
         <input onChange={({target: {value: password}}) => {
           setState(prevState => ({...prevState, password: password}))
-        }} type='text' placeholder='Password' value={state.password} />
+        }} type='password' placeholder='Password' value={state.password} />
         <br></br>
 
         {/* <input onChange={({target: {value: bio}}) => {

@@ -118,3 +118,19 @@ body {
     width: 100vw;     /* Full width on smaller screens */
   }
 }
+
+.profile {
+  background-color: rgba(63, 71, 84, 0.50);
+  border-radius: 15px;
+  position: absolute;
+  top: 35%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  text-align: center;
+  padding: 20px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+.profile > * {
+  margin: 5px 0;
+}

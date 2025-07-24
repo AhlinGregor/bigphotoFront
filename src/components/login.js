@@ -13,7 +13,7 @@ function Login(props) {
     password: '',
   }
   const [state, setState] = useState(initialState);
-  const [currentUser, setCurrentUser] = useState(null);
+  //const [currentUser, setCurrentUser] = useState(null);
   const navigate = useNavigate();
 
 
@@ -69,7 +69,7 @@ function Login(props) {
 
         <input onChange={({target: {value: inputPassword}}) => {
           setState(prevState => ({...prevState, password: inputPassword}))
-        }} type='text' placeholder='Password' />
+        }} type='password' placeholder='Password' />
         <br/>
 
 

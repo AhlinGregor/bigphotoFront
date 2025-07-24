@@ -10,6 +10,7 @@ import Feed from './components/feed';
 import CreatePost from './components/createPost';
 import FeedWrapper from './components/FeedWrapper';
 import Layout from './components/Layout';
+import Profile from './components/profile';
 
 export class AppRoutes extends Component {
   render() {
@@ -21,6 +22,7 @@ export class AppRoutes extends Component {
             <Route path='success/:id' element={<FeedWrapper />} />
             <Route path='login' element={<Login />} />
             <Route path='register' element={<Register />} />
+            <Route path='profile' element={<Profile />} />
             <Route path='/createPost' element={<CreatePost />} />
           </Route>
         </Routes>
