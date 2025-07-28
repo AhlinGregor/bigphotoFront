@@ -1,3 +1,7 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
 .App {
   text-align: center;
 }
@@ -155,4 +159,8 @@ body {
   border-radius: 6px;
   outline: none;
   box-sizing: border-box;
+}
+
+.btn {
+  @apply px-4 py-2 rounded-md border border-gray-300 text-sm bg-gray-100 hover:bg-gray-200 transition;
 }
