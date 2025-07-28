@@ -26,8 +26,10 @@ function Login(props) {
 
 
   const clickLogin = async () => {
+    console.log("Clicked");
     axios.defaults.baseURL = `${process.env.REACT_APP_BACKEND}`;
     try {
+      console.log("before await")
       const res = await api.post('/users/login', {
         ...state
       })

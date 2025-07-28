@@ -115,7 +115,7 @@ body {
 /* Mobile responsiveness */
 @media (max-width: 768px) {
   .onePost {
-    width: 100vw;     /* Full width on smaller screens */
+    width: 95vw;     /* Full width on smaller screens */
   }
 }
 
