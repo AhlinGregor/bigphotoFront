@@ -27,6 +27,10 @@ class OnePost extends Component {
     }
   };
 
+  postComment = async () => {
+    
+  }
+
   fetchLikeCount = async () => {
     try {
       // console.log("Fetching like count for postId:", this.props.postId);
@@ -129,6 +133,9 @@ class OnePost extends Component {
         />
         <strong>{comment.username}</strong>:&nbsp;
         {comment.content}
+        <button onClick={this.openCommentBox} style={{marginLeft: 'auto'}}>
+          reply
+        </button>
       </div>
 
       {/* All replies are rendered at same indent level */}
@@ -207,8 +214,10 @@ class OnePost extends Component {
         <p>{description}</p>
 
         {/* Comments Section */}
-        <div className="comments-section" style={{ marginTop: '16px' }}>
+        <div className="comments-section" style={{ marginTop: '16px', }}>
           <h4>Comments</h4>
+          <input type="text" className="commentInput" />
+          <button type="submit" style={{marginLeft: '80%'}}>Add comment</button>
           {commentTree.length > 0 ? (
             commentTree.map(comment => this.renderComment(comment))
           ) : (

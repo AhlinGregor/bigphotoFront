@@ -56,7 +56,7 @@ body {
   background-color: rgba(63, 71, 84, 0.50);
   border-radius: 15px;
   position: absolute;
-  top: 35%;
+  top: 40%;
   left: 50%;
   transform: translate(-50%, -50%);
   text-align: center;
@@ -121,13 +121,25 @@ body {
   .onePost {
     width: 95vw;     /* Full width on smaller screens */
   }
+  .register {
+    width: 95vw;
+    top: 50%;
+  }
+  .login {
+    width: 95vw;
+    top: 45%;
+  }
+  .profile {
+    width: 95vw;
+    top: 50%;
+  }
 }
 
 .profile {
   background-color: rgba(63, 71, 84, 0.50);
   border-radius: 15px;
   position: absolute;
-  top: 35%;
+  top: 45%;
   left: 50%;
   transform: translate(-50%, -50%);
   text-align: center;

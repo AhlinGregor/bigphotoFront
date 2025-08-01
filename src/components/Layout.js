@@ -11,6 +11,9 @@ function Layout() {
       setCurrentUser(JSON.parse(storedUser));
     }
   }, []);
+  // window.addEventListener('beforeunload', () => {
+  //   localStorage.removeItem('currentUser');
+  // });
 
   return (
     <>

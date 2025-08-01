@@ -83,11 +83,10 @@ function Profile(props) {
   }
     
 
-  const someVar = 'myUsername';
   return(
     <div className='profile-container'>
       <div className='profile'>
-        <h1>Welcome {someVar}!</h1>
+        <h1>Welcome {state.username}!</h1>
         <br/>
         <input onChange={({target: {value: username}}) => {
           setState(prevState => ({...prevState, username: username}))

@@ -12,6 +12,7 @@ function App() {
   const gotoRegister = async () => {
     navigate(`/register`);
   }
+  
 
 
 
