@@ -81,6 +81,23 @@ function Profile(props) {
       console.error('error: ', error);
     }
   }
+
+  const clickDelete = async () => {
+    console.log("Delete button clicked");
+    console.log("state username: ", state.username);
+
+    try {
+      const formData = new FormData();
+      formData.append('username', state.username);
+
+      const res = await api.post('/users/delete', formData);
+      console.log("After delete user");
+      console.log(res);
+    }
+    catch (error) {
+      console.error("error: ", error);
+    }
+  }
     
 
   return(
@@ -117,6 +134,7 @@ function Profile(props) {
         <br></br>
 
         <button onClick={() => clickUpdate()}>Update</button>
+        <button onClick={() => clickDelete()}>Delete</button>
       </div>
     </div>
   );
