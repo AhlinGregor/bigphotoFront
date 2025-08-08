@@ -52,6 +52,7 @@ function Profile(props) {
       formData.append('password', state.password);
       formData.append('bio', state.bio);
       formData.append('file', selectedImageFile);
+      console.log("Made form data");
 
       const config = {
         headers: {
@@ -59,7 +60,7 @@ function Profile(props) {
         },
       }
 
-      const res = await api.post('/users/newUser', formData, config);
+      const res = await api.post('/users/update', formData, config);
       // .then(res => {
       //   console.log('response: ', res)
       // })
