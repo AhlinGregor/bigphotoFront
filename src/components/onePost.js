@@ -8,6 +8,7 @@ class OnePost extends Component {
       comments: [],
       liked: false,
       likeCount: 0,
+      commentText: '',
     };
   }
 
@@ -115,36 +116,54 @@ class OnePost extends Component {
   };
 
   renderComment = (comment, isReply = false) => {
-  return (
-    <div
-      key={comment.id}
-      style={{
-        marginLeft: isReply ? 36 : 0,
-        borderLeft: isReply ? '2px solid #ccc' : 'none',
-        paddingLeft: isReply ? 8 : 0,
-        marginTop: 8
-      }}
-    >
-      <div style={{ display: 'flex', alignItems: 'center' }}>
-        <img
-          src={`${process.env.REACT_APP_BACKEND}/pfps/${comment.pfp}`}
-          alt="pfp"
-          style={{ width: '24px', height: '24px', borderRadius: '50%', marginRight: '8px' }}
-        />
-        <strong>{comment.username}</strong>:&nbsp;
-        {comment.content}
-        <button onClick={this.openCommentBox} style={{marginLeft: 'auto'}}>
-          reply
-        </button>
-      </div>
+    return (
+      <div
+        key={comment.id}
+        style={{
+          marginLeft: isReply ? 36 : 0,
+          borderLeft: isReply ? '2px solid #ccc' : 'none',
+          paddingLeft: isReply ? 8 : 0,
+          marginTop: 8
+        }}
+      >
+        <div style={{ display: 'flex', alignItems: 'center' }}>
+          <img
+            src={`${process.env.REACT_APP_BACKEND}/pfps/${comment.pfp}`}
+            alt="pfp"
+            style={{ width: '24px', height: '24px', borderRadius: '50%', marginRight: '8px' }}
+          />
+          <strong>{comment.username}</strong>:&nbsp;
+          {comment.content}
+          <button onClick={this.openCommentBox} style={{marginLeft: 'auto'}}>
+            reply
+          </button>
+        </div>
 
-      {/* All replies are rendered at same indent level */}
-      {comment.replies?.map(reply =>
-        this.renderComment(reply, true)
-      )}
-    </div>
-  );
-};
+        {/* All replies are rendered at same indent level */}
+        {comment.replies?.map(reply =>
+          this.renderComment(reply, true)
+        )}
+      </div>
+    );
+  };
+
+  postComment = async () => {
+    const { postId, currentUser } = this.props;
+    const { commentText } = this.state;
+
+    if(!commentText?.trim()) return;
+    try{
+      await api.post('/comments', {
+        postId: this.props.postId,
+        content: commentText.trim()
+      });
+      this.setState({ commentText: ''});
+      this.fetchComments();
+    }
+    catch(err) {
+      console.error('Failed to post comment: ', err);
+    }
+  }
 
 
   render() {
@@ -216,8 +235,10 @@ class OnePost extends Component {
         {/* Comments Section */}
         <div className="comments-section" style={{ marginTop: '16px', }}>
           <h4>Comments</h4>
-          <input type="text" className="commentInput" />
-          <button type="submit" style={{marginLeft: '80%'}}>Add comment</button>
+          <input type="text" className="commentInput"
+            value={this.state.commentText}
+            onChange={(e) => this.setState({ commentText: e.target.value})} />
+          <button onClick={this.postComment} style={{marginLeft: '80%'}}>Add comment</button>
           {commentTree.length > 0 ? (
             commentTree.map(comment => this.renderComment(comment))
           ) : (
