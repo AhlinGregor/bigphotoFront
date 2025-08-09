@@ -9,6 +9,9 @@ class OnePost extends Component {
       liked: false,
       likeCount: 0,
       commentText: '',
+      replyTo: null,
+      replyText: '',
+      showReplyOverlay: false,
     };
   }
 
@@ -28,9 +31,7 @@ class OnePost extends Component {
     }
   };
 
-  postComment = async () => {
-    
-  }
+  
 
   fetchLikeCount = async () => {
     try {
@@ -134,7 +135,7 @@ class OnePost extends Component {
           />
           <strong>{comment.username}</strong>:&nbsp;
           {comment.content}
-          <button onClick={this.openCommentBox} style={{marginLeft: 'auto'}}>
+          <button onClick={() => this.openCommentBox(comment.id)} style={{marginLeft: 'auto'}}>
             reply
           </button>
         </div>
@@ -145,6 +146,39 @@ class OnePost extends Component {
         )}
       </div>
     );
+  };
+
+  openCommentBox = (commentId) => {
+  this.setState({
+    replyTo: commentId,
+    replyText: '',
+    showReplyOverlay: true
+  });
+};
+
+  postReply = async () => {
+    const { replyText, replyTo } = this.state;
+    const { currentUser, postId } = this.props;
+
+    if (!replyText.trim()) return;
+
+    try {
+      await api.post('/comments/reply', {
+        content: replyText.trim(),
+        postId,
+        comment_id: replyTo
+      });
+
+      this.setState({
+        replyText: '',
+        replyTo: null,
+        showReplyOverlay: false
+      });
+
+      this.fetchComments();
+    } catch (err) {
+      console.error('Failed to post reply:', err);
+    }
   };
 
   postComment = async () => {
@@ -245,6 +279,40 @@ class OnePost extends Component {
             <p style={{ fontStyle: 'italic', color: '#777' }}>No comments yet.</p>
           )}
         </div>
+        {this.state.showReplyOverlay && (
+          <div style={{
+            position: 'fixed',
+            top: 0, left: 0, right: 0, bottom: 0,
+            backgroundColor: 'rgba(0,0,0,0.5)',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            zIndex: 1000
+          }}>
+            <div style={{
+              backgroundColor: '#fff',
+              padding: '20px',
+              borderRadius: '8px',
+              width: '300px'
+            }}>
+              <h4>Reply</h4>
+              <input
+                type="text"
+                value={this.state.replyText}
+                onChange={(e) => this.setState({ replyText: e.target.value })}
+                style={{ width: '100%', marginBottom: '10px' }}
+              />
+              <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+                <button onClick={() => this.setState({ showReplyOverlay: false })}>
+                  Cancel
+                </button>
+                <button onClick={this.postReply}>
+                  Add reply
+                </button>
+              </div>
+            </div>
+          </div>
+        )}
       </div>
     );
   }
