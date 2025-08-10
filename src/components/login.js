@@ -12,7 +12,6 @@ function Login(props) {
   const initialState = {
     username: '',
     password: '',
-    logged_in: false
   }
   const [state, setState] = useState(initialState);
   const [currentUser, setCurrentUser] = useState(null);
@@ -39,7 +38,7 @@ function Login(props) {
       // })
       // .catch(err => console.err('err: ', err));
       console.log(state.password);
-      console.log(state.logged_in);
+      // console.log(state.logged_in);
       console.log('TO JE RES DATA:', res.data);
       if (res.data.success) {
         // console.log('record id: ', res);
@@ -51,7 +50,7 @@ function Login(props) {
         console.log(res.data.user.id);
         
         navigate(`/success/${res.data.user.id}`);
-        // window.location.reload();
+        window.location.reload();
       }
       else {
         console.log("Incorrect password!");
