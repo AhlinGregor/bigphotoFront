@@ -50,14 +50,14 @@ function Register(props) {
         },
       }
 
-      const res = await api.post('/users/newUser', formData, config);
+      const res = await api.post('/api/users/newUser', formData, config);
       // .then(res => {
       //   console.log('response: ', res)
       // })
       // .catch(err => console.err('err: ', err));
       console.log('record id: ', res.data);
 
-      const loginRes = await api.post('/users/login', {
+      const loginRes = await api.post('/api/users/login', {
         username: state.username,
         password: state.password,
       });

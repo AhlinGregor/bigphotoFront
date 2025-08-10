@@ -27,7 +27,7 @@ class Feed extends React.Component {
       <>
         <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', width: '100%' }}>
           {
-            this.state.post.map(post => <OnePost key={post.id} postId={post.id} description={post.description} username={post.username} userId={post.user_id} imageUrl={`${process.env.REACT_APP_BACKEND}/uploads/${post.photo}`} profileImageUrl={`${process.env.REACT_APP_BACKEND}/pfps/${post.pfp}`} currentUser={this.props.currentUser} />)
+            this.state.post.map(post => <OnePost key={post.id} postId={post.id} description={post.description} username={post.username} userId={post.user_id} imageUrl={`/uploads/${post.photo}`} profileImageUrl={`/pfps/${post.pfp}`} currentUser={this.props.currentUser} />)
           }
         </div>
       </>
@@ -36,7 +36,7 @@ class Feed extends React.Component {
 
   getPost() {
     // axios.defaults.baseURL = `${process.env.REACT_APP_BACKEND}`;
-    axios.get(`${process.env.REACT_APP_BACKEND}/objave`)
+    axios.get(`/api/objave`)
     .then(({data: post}) => {
       //console.log('response', res);
       this.setState({

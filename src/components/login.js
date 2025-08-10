@@ -27,10 +27,10 @@ function Login(props) {
 
   const clickLogin = async () => {
     console.log("Clicked");
-    axios.defaults.baseURL = `${process.env.REACT_APP_BACKEND}`;
+    //axios.defaults.baseURL = `${process.env.REACT_APP_BACKEND}`;
     try {
       console.log("before await")
-      const res = await axios.post('/users/login', {
+      const res = await axios.post('/api/users/login', {
         ...state
       })
       // .then(res => {
@@ -44,7 +44,7 @@ function Login(props) {
         // console.log('record id: ', res);
         // const user = res.data.user;
         // setCurrentUser(user);
-        const resC = api.get('/users/session');
+        const resC = api.get('/api/users/session');
         localStorage.setItem("currentUser", JSON.stringify(res.data.user));
         console.log('HERES KUKIE: ', resC);
         console.log(res.data.user.id);

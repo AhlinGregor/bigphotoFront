@@ -37,7 +37,7 @@ function CreatePost(props) {
     // console.log('this is the user id: ', userId);
     // axios.defaults.baseURL = 'http://88.200.63.148:9002';
     try {
-      const resC = api.get('/users/session', {withCredentials: true});
+      const resC = api.get('/api/users/session', {withCredentials: true});
       const formData = new FormData();
       formData.append('description', state.description);
       formData.append('file', selectedImageFile);
@@ -52,8 +52,8 @@ function CreatePost(props) {
       }
 
       console.log('kukie: ', resC);
-      const res1 = await axios.post('/objave', formData, config);
-      const res = await axios.post('/objave', {
+      //const res1 = await axios.post('/api/objave', formData, config);
+      const res = await axios.post('/api/objave', {
         description: state.description,
         file: selectedImageFile
       }, {

@@ -60,14 +60,14 @@ function Profile(props) {
         },
       }
 
-      const res = await api.post('/users/update', formData, config);
+      const res = await api.post('/api/users/update', formData, config);
       // .then(res => {
       //   console.log('response: ', res)
       // })
       // .catch(err => console.err('err: ', err));
       console.log('record id: ', res.data);
 
-      const loginRes = await api.post('/users/login', {
+      const loginRes = await api.post('/api/users/login', {
         username: state.username,
         password: state.password,
       });
@@ -91,7 +91,7 @@ function Profile(props) {
       const formData = new FormData();
       formData.append('username', state.username);
 
-      const res = await api.post('/users/delete', formData);
+      const res = await api.post('/api/users/delete', formData);
       console.log("After delete user");
       console.log(res);
     }

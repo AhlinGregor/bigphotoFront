@@ -26,7 +26,7 @@ class OnePost extends Component {
     try {
       // onsole.log(`postid: ${this.props.postId} userid: ${this.props.currentUser.id}`)
       console.log("user:", this.props.currentUser.id);
-      const res = await api.get(`/objave/isliked/${this.props.currentUser.id}/${this.props.postId}`);
+      const res = await api.get(`/api/objave/isliked/${this.props.currentUser.id}/${this.props.postId}`);
       this.setState({ liked: res.data.liked });
     } catch (err) {
       console.error('Failed to check like status:', err);
@@ -38,7 +38,7 @@ class OnePost extends Component {
   fetchLikeCount = async () => {
     try {
       // console.log("Fetching like count for postId:", this.props.postId);
-      const res = await api.get(`/objave/likecount/${this.props.postId}`);
+      const res = await api.get(`/api/objave/likecount/${this.props.postId}`);
       this.setState({ likeCount: res.data.count });
     } catch (err) {
       console.error('Failed to fetch like count:', err);
@@ -52,14 +52,14 @@ class OnePost extends Component {
     try {
       if (liked) {
         // Unlike
-        await api.post(`/objave/unlike`, {
+        await api.post(`/api/objave/unlike`, {
           postId,
           userId: currentUser.id,
         });
         this.setState({ liked: false, likeCount: likeCount - 1 });
       } else {
         // Like
-        await api.post(`/objave/like`, {
+        await api.post(`/api/objave/like`, {
           postId,
           userId: currentUser.id,
         });
@@ -73,7 +73,7 @@ class OnePost extends Component {
 
   fetchComments = async () => {
     try {
-      const res = await api.get(`/comments/${this.props.postId}`);
+      const res = await api.get(`/api/comments/${this.props.postId}`);
       // console.log('Response: ', res.data);
       this.setState({ comments: res.data || [] });
     } catch (err) {
@@ -83,9 +83,10 @@ class OnePost extends Component {
 
   deletePost = async () => {
     try {
-      const res = await api.delete(`/objave/delete/${this.props.postId}`);
+      const res = await api.delete(`/api/objave/delete/${this.props.postId}`);
       if (res.data.status.success) {
         alert('Post deleted');
+        window.location.reload();
       } else {
         alert('Post not deleted');
       }
@@ -131,7 +132,7 @@ class OnePost extends Component {
       >
         <div style={{ display: 'flex', alignItems: 'center' }}>
           <img
-            src={`${process.env.REACT_APP_BACKEND}/pfps/${comment.pfp}`}
+            src={`/pfps/${comment.pfp}`}
             alt="pfp"
             style={{ width: '24px', height: '24px', borderRadius: '50%', marginRight: '8px' }}
           />
@@ -166,7 +167,7 @@ class OnePost extends Component {
     if (!replyText.trim()) return;
 
     try {
-      await api.post('/comments/reply', {
+      await api.post('/api/comments/reply', {
         content: replyText.trim(),
         postId: this.props.postId,
         commentId: replyTo,
@@ -188,21 +189,20 @@ class OnePost extends Component {
   const { commentText } = this.state;
   if (!commentText?.trim()) return;
   try {
-    const formData = new FormData();
-      formData.append('content', commentText.trim());
-      formData.append('postId', this.props.postId);
-      // formData.append('user', userId);
+    
+    const config = {
+      headers: {
+        'Content-Type': 'application/x-www-form-urlencoded',
+      },
+      withCredentials: true,
+      timeout: 30000,
+    }
 
-      const config = {
-        headers: {
-          'Content-Type': 'multipart/form-data',
-        },
-        withCredentials: true,
-        timeout: 30000,
-      }
-
-      console.log('Before post');
-      const res = await api.post('/comments', formData, config);
+    console.log('postId for comment post: ', this.props.postId);
+    const res = await api.post('/api/comments', {
+      content: commentText.trim(),
+      postId: this.props.postId
+    }, config);
 
     // optional: inspect res.data to confirm success
     console.log('postComment response', res.data);
