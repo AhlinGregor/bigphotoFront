@@ -18,13 +18,13 @@ export class AppRoutes extends Component {
     return(
       <BrowserRouter>
         <Routes>
-          <Route path="/" element={<Layout />}>
-            <Route index element={currentUser ? <Feed /> : <Navigate to="/login" />} />
-            <Route path='success/:id' element={<FeedWrapper />} />
+          <Route path="/" element={<Layout currentUser={currentUser} />}>
+            <Route index element={currentUser ? <Feed currentUser={currentUser} /> : <Navigate to="/login" />} />
+            <Route path='success/:id' element={<FeedWrapper currentUser={currentUser} />} />
             <Route path='login' element={<Login />} />
             <Route path='register' element={<Register />} />
-            <Route path='profile' element={<Profile />} />
-            <Route path='/createPost' element={<CreatePost />} />
+            <Route path='profile' element={<Profile currentUser={currentUser} />} />
+            <Route path='/createPost' element={<CreatePost currentUser={currentUser} />} />
           </Route>
         </Routes>
       </BrowserRouter>

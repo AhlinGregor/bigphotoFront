@@ -1,5 +1,6 @@
 import { Component } from 'react';
 import api from '../services/api';
+import axios from 'axios';
 
 class OnePost extends Component {
   constructor(props) {
@@ -24,7 +25,7 @@ class OnePost extends Component {
   checkIfLiked = async () => {
     try {
       // onsole.log(`postid: ${this.props.postId} userid: ${this.props.currentUser.id}`)
-      const res = await api.get(`/objave/isliked/${this.props.currentUser.id}/${this.props.postId}`);
+      const res = await axios.get(`/objave/isliked/${this.props.currentUser.id}/${this.props.postId}`, 'withCredentials: true');
       this.setState({ liked: res.data.liked });
     } catch (err) {
       console.error('Failed to check like status:', err);
@@ -157,6 +158,7 @@ class OnePost extends Component {
 };
 
   postReply = async () => {
+    console.log("THIS IS IN FRONTEND REPLY")
     const { replyText, replyTo } = this.state;
     const { currentUser, postId } = this.props;
 
@@ -165,8 +167,8 @@ class OnePost extends Component {
     try {
       await api.post('/comments/reply', {
         content: replyText.trim(),
-        postId,
-        comment_id: replyTo
+        postId: this.props.postId,
+        commentId: replyTo,
       });
 
       this.setState({
@@ -182,22 +184,34 @@ class OnePost extends Component {
   };
 
   postComment = async () => {
-    const { postId, currentUser } = this.props;
-    const { commentText } = this.state;
+  const { commentText } = this.state;
+  if (!commentText?.trim()) return;
+  try {
+    const formData = new FormData();
+      formData.append('content', commentText.trim());
+      formData.append('postId', this.props.postId);
+      // formData.append('user', userId);
 
-    if(!commentText?.trim()) return;
-    try{
-      await api.post('/comments', {
-        postId: this.props.postId,
-        content: commentText.trim()
-      });
-      this.setState({ commentText: ''});
-      this.fetchComments();
-    }
-    catch(err) {
-      console.error('Failed to post comment: ', err);
-    }
+      const config = {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+        },
+        withCredentials: true,
+        timeout: 30000,
+      }
+
+      console.log('Before post');
+      const res = await api.post('/comments', formData, config);
+
+    // optional: inspect res.data to confirm success
+    console.log('postComment response', res.data);
+
+    this.setState({ commentText: '' });
+    this.fetchComments();
+  } catch (err) {
+    console.error('Failed to post comment:', err);
   }
+};
 
 
   render() {

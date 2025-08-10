@@ -1,5 +1,5 @@
 import {useState} from 'react';
-// import axios from 'axios';
+import axios from 'axios';
 import api from '../services/api';
 import {useNavigate} from 'react-router';
 
@@ -37,6 +37,7 @@ function CreatePost(props) {
     // console.log('this is the user id: ', userId);
     // axios.defaults.baseURL = 'http://88.200.63.148:9002';
     try {
+      const resC = axios.get('/users/session');
       const formData = new FormData();
       formData.append('description', state.description);
       formData.append('file', selectedImageFile);
@@ -50,7 +51,7 @@ function CreatePost(props) {
         timeout: 30000,
       }
 
-      console.log('Before post');
+      console.log('kukie: ', resC);
       const res = await api.post('/objave', formData, config);
       // .then(res => {
       //   console.log('response: ', res)

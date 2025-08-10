@@ -12,9 +12,10 @@ function Login(props) {
   const initialState = {
     username: '',
     password: '',
+    logged_in: false
   }
   const [state, setState] = useState(initialState);
-  //const [currentUser, setCurrentUser] = useState(null);
+  const [currentUser, setCurrentUser] = useState(null);
   const navigate = useNavigate();
 
 
@@ -30,7 +31,7 @@ function Login(props) {
     axios.defaults.baseURL = `${process.env.REACT_APP_BACKEND}`;
     try {
       console.log("before await")
-      const res = await api.post('/users/login', {
+      const res = await axios.post('/users/login', {
         ...state
       })
       // .then(res => {
@@ -38,15 +39,19 @@ function Login(props) {
       // })
       // .catch(err => console.err('err: ', err));
       console.log(state.password);
-      console.log(res.data);
+      console.log(state.logged_in);
+      console.log('TO JE RES DATA:', res.data);
       if (res.data.success) {
-        console.log('record id: ', res);
+        // console.log('record id: ', res);
         // const user = res.data.user;
         // setCurrentUser(user);
+        const resC = api.get('/users/session');
         localStorage.setItem("currentUser", JSON.stringify(res.data.user));
+        console.log('HERES KUKIE: ', resC);
         console.log(res.data.user.id);
+        
         navigate(`/success/${res.data.user.id}`);
-        window.location.reload();
+        // window.location.reload();
       }
       else {
         console.log("Incorrect password!");
