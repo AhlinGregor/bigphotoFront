@@ -25,7 +25,8 @@ class OnePost extends Component {
   checkIfLiked = async () => {
     try {
       // onsole.log(`postid: ${this.props.postId} userid: ${this.props.currentUser.id}`)
-      const res = await axios.get(`/objave/isliked/${this.props.currentUser.id}/${this.props.postId}`, 'withCredentials: true');
+      console.log("user:", this.props.currentUser.id);
+      const res = await api.get(`/objave/isliked/${this.props.currentUser.id}/${this.props.postId}`);
       this.setState({ liked: res.data.liked });
     } catch (err) {
       console.error('Failed to check like status:', err);
