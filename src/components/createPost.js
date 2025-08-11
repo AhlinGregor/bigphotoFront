@@ -30,14 +30,16 @@ function CreatePost(props) {
   }
 
 
+  axios.defaults.withCredentials = true;
 
   const clickPost = async () => {
     console.log("Button clicked");
     // const userId = JSON.parse(localStorage.getItem("currentUser"));
     // console.log('this is the user id: ', userId);
     // axios.defaults.baseURL = 'http://88.200.63.148:9002';
+    axios.defaults.baseURL = `${process.env.REACT_APP_BACKEND}`;
     try {
-      const resC = api.get('/api/users/session', {withCredentials: true});
+      // const resC = api.get('/api/users/session', {withCredentials: true});
       const formData = new FormData();
       formData.append('description', state.description);
       formData.append('file', selectedImageFile);
@@ -51,12 +53,9 @@ function CreatePost(props) {
         timeout: 30000,
       }
 
-      console.log('kukie: ', resC);
+      // console.log('kukie: ', resC);
       //const res1 = await axios.post('/api/objave', formData, config);
-      const res = await axios.post('/api/objave', {
-        description: state.description,
-        file: selectedImageFile
-      }, {
+      const res = await axios.post('/api/objave', formData, {
         headers: {
           'Content-Type': 'multipart/form-data'
         }, withCredentials: true, timeout: 30000

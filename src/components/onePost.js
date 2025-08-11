@@ -132,7 +132,7 @@ class OnePost extends Component {
       >
         <div style={{ display: 'flex', alignItems: 'center' }}>
           <img
-            src={`/pfps/${comment.pfp}`}
+            src={`${process.env.REACT_APP_BACKEND}/pfps/${comment.pfp}`}
             alt="pfp"
             style={{ width: '24px', height: '24px', borderRadius: '50%', marginRight: '8px' }}
           />

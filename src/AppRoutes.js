@@ -16,7 +16,7 @@ export class AppRoutes extends Component {
   render() {
     const currentUser = JSON.parse(localStorage.getItem("currentUser"));
     return(
-      <BrowserRouter>
+      <BrowserRouter basename="/~89231290">
         <Routes>
           <Route path="/" element={<Layout currentUser={currentUser} />}>
             <Route index element={currentUser ? <Feed currentUser={currentUser} /> : <Navigate to="/login" />} />
